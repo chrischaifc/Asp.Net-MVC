@@ -1,0 +1,133 @@
+﻿
+@{
+    ViewBag.Title = "Auth";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model MyFirstMVC.Models.RegisterFormModel
+<h2>Hello, please fill up the form to register:</h2>
+
+@using (Html.BeginForm("RegistrationForm", "Registration", FormMethod.Post))
+{
+    <div class="d-flex justify-content-center" style="margin-left:5%">
+        <div style="width:80%;">
+
+            <div class="register-form-section">
+                <h4>Personal Info</h4>
+                <hr>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="Email">Email:</label>
+                        @Html.TextBoxFor(m => m.Email,
+                       new { @class = "form-control", @type = "email", @Value = @Session["Email"], @required = "required", id = "Email", @name = "Email" })
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="FirstName">First Name:</label>
+                        @Html.TextBoxFor(m => m.FirstName,
+                       new { @class = "form-control", @type = "text", placeholder = "John", @required = "required", id = "FirstName" })
+                        @Html.ValidationMessageFor(m => m.FirstName)
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="LastNamet">Last Name:</label>
+                        @Html.TextBoxFor(m => m.LastName,
+                       new { @class = "form-control", @type = "text", placeholder = "Smith", @required = "required", id = "LastName" })
+                        @Html.ValidationMessageFor(m => m.LastName)
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="Phone">Phone Number:</label>
+                        @Html.TextBoxFor(m => m.Phone,
+                       new { @class = "form-control", @type = "number", placeholder = "Smith", @required = "required", id = "Phone" })
+                        @Html.ValidationMessageFor(m => m.Phone)
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="dob">Date of Birth</label>
+                        @Html.TextBoxFor(m => m.DOB,
+                       new { @class = "form-control", @type = "date", @required = "required", id = "dob" })
+                        @Html.ValidationMessageFor(m => m.DOB)
+                    </div>
+                </div>
+            </div>
+
+            <div class="register-form-section">
+                <h4>Address</h4>
+                <hr>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="inputDefault">Address:</label>
+                        @Html.TextBoxFor(m => m.Address,
+                       new { @class = "form-control", @type = "text", placeholder = "Spadina Rd.", @required = "required", id = "dob" })
+                        @Html.ValidationMessageFor(m => m.Address)
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="PostalCode">Postal Code:</label>
+                        @Html.TextBoxFor(m => m.PostalCode,
+                      new { @class = "form-control", @type = "text", placeholder = "M1M 2M2", @required = "required", id = "PostalCode" })
+                        @Html.ValidationMessageFor(m => m.PostalCode)
+                    </div>
+                </div>
+            </div>
+
+            <div class="register-form-section">
+                <h4>Course Information</h4>
+                <hr>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="institution">Institution:</label>
+                        @Html.DropDownList("Institutions", ViewBag.Institutions as SelectList, "Please select the institution",
+                       new { @class= "form-control", @required = "required", id = "institution" } )
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="rotations">Rotation:</label>
+                        @Html.DropDownList("Institutions", ViewBag.Rotations as SelectList, "Please select the rotation",
+                       new { @class= "form-control", @required = "required", id = "rotation" } )
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="inputDefault">Start Date:</label>
+                        @Html.TextBoxFor(m => m.DOB,
+                       new { @class = "form-control", @type = "date", @required = "required", id = "startDate" })
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="inputDefault">End Date:</label>
+                        @Html.TextBoxFor(m => m.DOB,
+                       new { @class = "form-control", @type = "date", @required = "required", id = "endDate" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                    </div>
+                </div>
+            </div>
+
+            <div class="register-form-section">
+                <h4>Create a Password:</h4>
+                <hr>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="Password">Password:</label>
+                        @Html.TextBoxFor(m => m.Password,
+                       new { @class = "form-control", @type = "password", placeholder = "Password", @required = "required", id = "password" })
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="confirmPassword">Confirm Password:</label>
+                        @Html.TextBoxFor(m => m.ConfirmPassword,
+                       new { @class = "form-control", @type = "password", placeholder = "Password", @required = "required", id = "confirmPassword" })
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-info" type="submit">Register</button>
+        </div>
+    </div>
+}

@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Auth";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model MyFirstMVC.Models.FormData
+<div class="d-flex justify-content-center">
+    <div class="row" style="width:70%;">
+        <div class="col-md-6">
+            <div class="auth-card card border-success mb-3" style="max-width: 20rem;">
+                <div class="card-header">Login</div>
+                <div class="card-body">
+                    <h4 class="card-title">Already Registered?</h4>
+                    @if (TempData["LoginMessage"] != null)
+                    {
+                        <span style="color:red;">@TempData["LoginMessage"].ToString()</span>
+                    }
+                    @using (Html.BeginForm("LoginForm", "Auth", FormMethod.Post))
+                    {
+                        <div class="form-group">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">@@</span>
+                                </div>
+
+                                @Html.TextBoxFor(m => m.Email, 
+                               new { @class = "form-control", @type = "email", placeholder = "Enter Email", @required = "required" })
+
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    @*Locker Icon*@
+                                    <span class="input-group-text">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 20 22">
+                                            <path d="M18 10v-4c0-3.313-2.687-6-6-6s-6 2.687-6 6v4h-3v14h18v-14h-3zm-10-4c0-2.206 1.794-4 4-4s4 1.794 4 4v4h-8v-4zm11 16h-14v-10h14v10z" />
+                                        </svg>
+                                    </span>
+                                </div>
+                                @Html.TextBoxFor(m => m.Password, 
+                               new { @class = "form-control", @type = "password", placeholder = "Password", @required = "required" })
+                            </div>
+                            <button class="btn btn-success" type="submit">Login</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="auth-card card border-info mb-3" style="max-width: 20rem;">
+                <div class="card-header">Register</div>
+                <div class="card-body">
+                    <h4 class="card-title">Not Registered Yet?</h4>
+                    @if (TempData["RegisterMessage"] != null)
+                    {
+                        <span style="color:red;">@TempData["RegisterMessage"].ToString()</span>
+                    }
+                    @using (Html.BeginForm("RegisterForm", "Auth", FormMethod.Post))
+                    {
+                        <div class="form-group">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">@@</span>
+                                </div>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email", placeholder = "Enter Email", @required = "required" })
+                            </div>
+                            <button class="btn btn-info" type="submit">Register</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
