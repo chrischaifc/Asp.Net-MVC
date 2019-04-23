@@ -10,6 +10,7 @@ namespace MyFirstMVC.Controllers
     {
         public ActionResult Index()
         {
+            Session["email"] = null;
             return View();
         }
 

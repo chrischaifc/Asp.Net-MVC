@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.SqlClient;
 using System.Configuration;
+using MyFirstMVC.Models;
+using MyFirstMVC.Models.Program;
+using MyFirstMVC.Models.RotationList;
 
 namespace MyFirstMVC.Controllers
 {
@@ -17,11 +20,14 @@ namespace MyFirstMVC.Controllers
         {
             // Get data from DB to fill dropdown options
             List<string> instutionsList = new List<string>();
+            List<string> programTypesList = new List<string>();
+            List<string> programsList = new List<string>();
             List<string> rotationsList = new List<string>();
-            
+            List<string> rotationSupervisorsList = new List<string>();
+
             using (var connection = new SqlConnection(CS))
             {
-                string commandText = "SELECT Name FROM [Institutional]";
+                string commandText = "SELECT DISTINCT Name FROM [Institutional]";
                 using (var command = new SqlCommand(commandText, connection))
                 { 
                     connection.Open();
@@ -38,7 +44,7 @@ namespace MyFirstMVC.Controllers
 
             using (var connection = new SqlConnection(CS))
             {
-                string commandText = "SELECT Rotations FROM [Rotations]";
+                string commandText = "SELECT DISTINCT Rotations FROM [Rotations]";
                 using (var command = new SqlCommand(commandText, connection))
                 {
                     connection.Open();
@@ -51,16 +57,67 @@ namespace MyFirstMVC.Controllers
                     }
                     connection.Close();
                 }
+
+                commandText = "SELECT DISTINCT Supervisor FROM [Rotations]";
+                using (var command = new SqlCommand(commandText, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader sdr = command.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            rotationSupervisorsList.Add(Convert.ToString(sdr[0]));
+                        }
+                    }
+                    connection.Close();
+                }
+
+                commandText = "SELECT DISTINCT Name FROM [Programs]";
+                using (var command = new SqlCommand(commandText, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader sdr = command.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            programsList.Add(Convert.ToString(sdr[0]));
+                        }
+                    }
+                    connection.Close();
+                }
+
+                commandText = "SELECT DISTINCT Type FROM [Programs]";
+                using (var command = new SqlCommand(commandText, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader sdr = command.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            programTypesList.Add(Convert.ToString(sdr[0]));
+                        }
+                    }
+                    connection.Close();
+                }
             }
 
             SelectList selectIntitutions = new SelectList(instutionsList, "id");
             SelectList selectRotations = new SelectList(rotationsList, "id");
+            SelectList selectPrograms = new SelectList(programsList, "id");
+            SelectList selectProgramTypes = new SelectList(programTypesList, "id");
+            SelectList selectRotationSupervisors = new SelectList(rotationSupervisorsList, "id");
 
             ViewData["Institutions"] = selectIntitutions;
             ViewData["Rotations"] = selectRotations;
+            ViewData["RotationSupervisors"] = selectRotationSupervisors;
+            ViewData["Programs"] = selectPrograms;
+            ViewData["ProgramTypes"] = selectProgramTypes;
 
             ViewBag.Institutions = selectIntitutions;
             ViewBag.Rotations = selectRotations;
+            ViewBag.RotationSupervisors = selectRotationSupervisors;
+            ViewBag.Programs = selectPrograms;
+            ViewBag.ProgramTypes = selectProgramTypes;
 
             return View();
         }
@@ -75,26 +132,54 @@ namespace MyFirstMVC.Controllers
                     con.Open();
                     string secCode = generateSecurityCode();
 
-                    SqlCommand cmd = new SqlCommand("INSERT INTO user (FirstName, LastName, Address, PostalCode, DOB, " +
-                                                    "Email, Password, Phone, ProgramName, InstitutionName, SecurityCode) " +
-                                                    "VALUES (" 
-                                                    + "'" + formData.FirstName + "', "
-                                                    + "'" + formData.LastName + "', "
-                                                    + "'" + formData.Address + "', "
-                                                    + "'" + formData.PostalCode + "', "
-                                                    + "'" + formData.DOB + "', "
-                                                    + "'" + formData.Email + "', "
-                                                    + "'" + formData.Password + "', "
-                                                    + "'" + formData.Phone + "', "
-                                                    + "'" + formData.ProgramName + "', "
-                                                    + "'" + formData.InstitutionName + "', "
-                                                    + "'" + secCode + "'", con);
+                    StudentContext studentContext = new StudentContext();
+                    Student student = new Student();
+                    try
+                    {
+                        student.FirstName = formData.FirstName;
+                        student.LastName = formData.LastName;
+                        student.Address = formData.Address;
+                        student.PostalCode = formData.PostalCode;
+                        student.DOB = formData.DOB;
+                        student.Email = formData.Email;
+                        student.Password = formData.Password;
+                        student.Phone = formData.Phone;
+                        student.ProgramName = formData.ProgramName;
+                        student.InstitutionName = formData.InstitutionName;
+                        student.ProgramType = formData.ProgramType;
+                        student.SecurityCode = secCode;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+
+                    studentContext.Students.Add(student);
+                    studentContext.SaveChanges();
+
+                    Session["FirstName"] = student.FirstName;
+                    Session["id"] = student.ID;
+
+
+                    RotationListContext rotationListContext = new RotationListContext();
+                    RotationList rotationList = new RotationList();
+                    rotationList.StudentName = student.LastName + ", " + student.FirstName;
+                    rotationList.StudentId = student.ID;
+                    rotationList.Start = formData.StartDate;
+                    rotationList.End = formData.EndDate;
+                    rotationList.Supervisor = formData.RotationSupervisors;
+                    rotationList.Type = formData.Rotations;
+
+                    rotationListContext.RotationList.Add(rotationList);
+                    rotationListContext.SaveChanges();
+
                 }
                 return RedirectToAction("StudentPage", "Student");
             }
             else
             {
-                return View("Index");
+                //return View("Index");
+                return RedirectToAction("Index", "Registration");
             }
         }
 
@@ -107,7 +192,7 @@ namespace MyFirstMVC.Controllers
 
             using (var connection = new SqlConnection(CS))
             {
-                string commandText = "SELECT User FROM [User] WHERE SecurityCode=@SecurityCode";
+                string commandText = "SELECT id FROM [Students] WHERE SecurityCode=@SecurityCode";
                 using (var command = new SqlCommand(commandText, connection))
                 {
                     while (true)
@@ -118,9 +203,9 @@ namespace MyFirstMVC.Controllers
                         command.Parameters.AddWithValue("@SecurityCode", generatedCode);
                         connection.Open();
 
-                        string user = (string)command.ExecuteScalar();
+                        string id = (string)command.ExecuteScalar();
 
-                        if (String.IsNullOrEmpty(user))
+                        if (String.IsNullOrEmpty(id))
                         {
                             break;
                         }

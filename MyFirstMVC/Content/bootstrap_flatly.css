@@ -162,9 +162,10 @@ sup {
 }
 
 a {
-  color: #fff;
-  text-decoration: none;
-  background-color: transparent;
+    /* value changed */
+    color: #878580; 
+    text-decoration: none;
+    background-color: transparent;
 }
 
 a:hover {

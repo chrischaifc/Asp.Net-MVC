@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Data.Entity;
 
 namespace MyFirstMVC
 {
@@ -16,6 +17,9 @@ namespace MyFirstMVC
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Database.SetInitializer<MyFirstMVC.Models.StudentContext>(null);
+            Database.SetInitializer<MyFirstMVC.Models.Program.ProgramContext>(null);
         }
     }
 }

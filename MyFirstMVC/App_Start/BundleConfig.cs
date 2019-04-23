@@ -24,7 +24,7 @@ namespace MyFirstMVC
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap_flatly.css",
-                      "~/Content/site.css"));
+                      "~/Content/Site.css"));
         }
     }
 }

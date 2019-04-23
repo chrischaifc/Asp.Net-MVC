@@ -16,11 +16,14 @@
 
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item no-underline @(ViewBag.Title == "Home Page" ? "active" : "") ">
+                <li class="nav-item no-underline"@(ViewBag.Title == "Home Page" ? "active" : "")>
                     @Html.ActionLink("Home", "Index", "Home")
                 </li>
-                <li class="nav-item no-underline @(ViewBag.Title == "Auth" ? "active" : "")">
+                <li class="nav-item no-underline@(ViewBag.Title == "Auth" ? "active" : "")">
                     @Html.ActionLink("Login/Register", "Index", "Auth")
+                </li>
+                <li class="nav-item no-underline@(ViewBag.Title == "AdminLogin" ? "active" : "")">
+                    @Html.ActionLink("Admin", "AdminLogin", "Admin")
                 </li>
             </ul>
         </div>

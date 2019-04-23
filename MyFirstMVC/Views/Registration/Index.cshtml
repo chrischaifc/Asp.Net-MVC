@@ -1,9 +1,16 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Auth";
+
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model MyFirstMVC.Models.RegisterFormModel
+
+@using MyFirstMVC.Models;
+
+@{
+    var Programs = ViewBag.Programs;
+}
+
 <h2>Hello, please fill up the form to register:</h2>
 
 @using (Html.BeginForm("RegistrationForm", "Registration", FormMethod.Post))
@@ -43,7 +50,7 @@
                     <div class="form-group col-md-4">
                         <label class="col-form-label" for="Phone">Phone Number:</label>
                         @Html.TextBoxFor(m => m.Phone,
-                       new { @class = "form-control", @type = "number", placeholder = "Smith", @required = "required", id = "Phone" })
+                       new { @class = "form-control", @type = "number", placeholder = "6471234567", @required = "required", id = "Phone" })
                         @Html.ValidationMessageFor(m => m.Phone)
                     </div>
 
@@ -81,28 +88,46 @@
                 <hr>
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label class="col-form-label" for="institution">Institution:</label>
-                        @Html.DropDownList("Institutions", ViewBag.Institutions as SelectList, "Please select the institution",
-                       new { @class= "form-control", @required = "required", id = "institution" } )
+                        <label class="col-form-label" for="InstitutionName">Institution:</label>
+                        @Html.DropDownList("InstitutionName", ViewBag.Institutions as SelectList, "Please select  a institution",
+                            new { @class= "form-control", @required = "required", id = "InstitutionName" } )
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="ProgramType">Program Type:</label>
+                        @Html.DropDownList("ProgramType", ViewBag.ProgramTypes as SelectList, "Please select a Program Type",
+                            new { @class= "form-control", @required = "required", id = "ProgramType" } )
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="ProgramName">Program Name:</label>
+                        @Html.DropDownList("ProgramName", ViewBag.Programs as SelectList, "Please select a Program",
+                            new { @class= "form-control", @required = "required", id = "ProgramName" } )
                     </div>
 
                     <div class="form-group col-md-4">
                         <label class="col-form-label" for="rotations">Rotation:</label>
-                        @Html.DropDownList("Institutions", ViewBag.Rotations as SelectList, "Please select the rotation",
-                       new { @class= "form-control", @required = "required", id = "rotation" } )
+                        @Html.DropDownList("Rotations", ViewBag.Rotations as SelectList, "Please select a rotation",
+                            new { @class= "form-control", @required = "required", id = "Rotation" } )
+                    </div>
+                    
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="rotationSupervisor">Rotation Supervisor:</label>
+                        @Html.DropDownList("RotationSupervisors", ViewBag.RotationSupervisors as SelectList, "Please select a rotation supervisor",
+                            new { @class= "form-control", @required = "required", id = "RotationSupervisor" } )
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label class="col-form-label" for="inputDefault">Start Date:</label>
-                        @Html.TextBoxFor(m => m.DOB,
+                        @Html.TextBoxFor(m => m.StartDate,
                        new { @class = "form-control", @type = "date", @required = "required", id = "startDate" })
                     </div>
 
                     <div class="form-group col-md-4">
                         <label class="col-form-label" for="inputDefault">End Date:</label>
-                        @Html.TextBoxFor(m => m.DOB,
+                        @Html.TextBoxFor(m => m.EndDate,
                        new { @class = "form-control", @type = "date", @required = "required", id = "endDate" })
                         @Html.ValidationMessageFor(m => m.ConfirmPassword)
                     </div>

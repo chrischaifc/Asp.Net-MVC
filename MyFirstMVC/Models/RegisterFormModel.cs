@@ -25,19 +25,29 @@ namespace MyFirstMVC.Models
         public string Address { get; set; }
 
         [Required]
-        [RegularExpression("[ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ] ?[0-9][ABCEGHJKLMNPRSTVWXYZ][0-9]", ErrorMessage = "Provide a valid zip code")]
+        [RegularExpression("[ABCEGHJKLMNPRSTVXYabceghjklmnprstvxy][0-9]" +
+                           "[ABCEGHJKLMNPRSTVWXYZabceghjklmnprstvwxyz] ?[0-9][ABCEGHJKLMNPRSTVWXYZabceghjklmnprstvwxyz][0-9]"
+            , ErrorMessage = "Provide a valid zip code")]
         public string PostalCode { get; set; }
 
         [Required]
-        [StringLength(8)]
+        [StringLength(10)]
         public string DOB { get; set; }
 
         [Required]
-        [MinLength(8)]
+        [StringLength(10)]
+        public string StartDate { get; set; }
+
+        [Required]
+        [StringLength(10)]
+        public string EndDate { get; set; }
+
+        [Required]
+        [MinLength(4)]
         public string Password { get; set; }
 
         [Required]
-        [MinLength(8)]
+        [MinLength(4)]
         [Compare("Password", ErrorMessage = "Passwords don't match, try again.")]
         public string ConfirmPassword { get; set; }
 
@@ -53,6 +63,12 @@ namespace MyFirstMVC.Models
 
         [Required]
         public string InstitutionName { get; set; }
+
+        [Required]
+        public string Rotations { get; set; }
+
+        [Required]
+        public string RotationSupervisors { get; set; }
 
     }
 }

@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary navbar-fixed-top" id="navbarColor03" style="margin-bottom:10%;">
+    <a class="navbar-brand" href="#">Health School</a>
+    <button class="navbar-toggler" aria-expanded="false" aria-controls="navbarColor01" aria-label="Toggle navigation" type="button" data-target="#navbarColor01" data-toggle="collapse">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor03">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item no-underline" @(ViewBag.Title == "Index" ? "active" : "") ">
+                @Html.ActionLink("Students", "Index", "StudentList")
+            </li>
+            <li class="nav-item no-underline@(ViewBag.Title == "Index" ? "active" : "")">
+                @Html.ActionLink("Rotations", "Index", "RotationList")
+            </li>
+            <li class="nav-item no-underline@(ViewBag.Title == "Index" ? "active" : "")">
+                @Html.ActionLink("Rotation", "Index", "Rotation")
+            </li>
+            <li class="nav-item no-underline@(ViewBag.Title == "Index" ? "active" : "")">
+                @Html.ActionLink("Programs", "Index", "Program")
+            </li>
+            <li class="nav-item no-underline@(ViewBag.Title == "Index" ? "active" : "")">
+                @Html.ActionLink("Institution", "Index", "Institutional")
+            </li>
+        </ul>
+    </div>
+    <div class="form-inline">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit" onclick="location.href='@Url.Action("Index", "Home")'">Logout</button>
+    </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Final Project - CPAN</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

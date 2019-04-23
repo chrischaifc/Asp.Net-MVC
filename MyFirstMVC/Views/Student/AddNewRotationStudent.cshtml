@@ -1,0 +1,70 @@
+﻿@model MyFirstMVC.Models.RotationList.RotationList
+
+
+@{
+    ViewBag.Title = "AddNewRotationStudent";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+}
+
+<h2>Add New Rotation</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Rotations Available</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.StudentName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StudentName, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.Student, @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.StudentName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-form-label" for="Rotations">Rotation:</label>
+            <div class="col-md-10">
+                @Html.DropDownList("Rotations", ViewBag.Rotations as SelectList, "Please select a Rotation",
+                    new { @class= "form-control", @required = "required", id = "Rotations" } )
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Start, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Start, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.Start, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.End, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.End, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.End, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-form-label" for="Supervisors">Rotation Supervisors:</label>
+            <div class="col-md-10">
+                @Html.DropDownList("Supervisors", ViewBag.Supervisors as SelectList, "Please select a Supervisors",
+                    new { @class= "form-control", @required = "required", id = "Supervisors" } )
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "StudentPage")
+</div>

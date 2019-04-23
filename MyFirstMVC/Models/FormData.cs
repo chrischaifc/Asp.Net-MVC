@@ -28,7 +28,7 @@ namespace MyFirstMVC.Models
         {
             using (var connection = new SqlConnection(CS))
             {
-                string commandText = "SELECT FirstName FROM [User] WHERE Email=@Username AND Password = @Password";
+                string commandText = "SELECT FirstName FROM [Students] WHERE Email=@Username AND Password = @Password";
                 using (var command = new SqlCommand(commandText, connection))
                 {
                     command.Parameters.AddWithValue("@Username", this.Email);
@@ -54,7 +54,7 @@ namespace MyFirstMVC.Models
         {
             using (var connection = new SqlConnection(CS))
             {
-                string commandText = "SELECT Email FROM [User] WHERE Email=@Email";
+                string commandText = "SELECT Email FROM [Students] WHERE Email=@Email";
                 using (var command = new SqlCommand(commandText, connection))
                 {
                     command.Parameters.AddWithValue("@Email", this.Email);

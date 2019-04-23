@@ -1,0 +1,73 @@
+﻿@model IEnumerable<MyFirstMVC.Models.RotationList.RotationList>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Administrator.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")&nbsp;
+    @Html.ActionLink("Export As Excel", "ExportView")
+</p>
+<p>
+    @using (Html.BeginForm("Index", "RotationList", FormMethod.Get))
+    {
+        <b>Search Option:&nbsp;&nbsp;&nbsp;&nbsp;</b>
+        @Html.RadioButton("option", "Name") <text>Student Name &nbsp;&nbsp;&nbsp;</text>
+        @Html.RadioButton("option", "Type") <text>Type &nbsp;&nbsp;&nbsp;</text>
+        @Html.RadioButton("option", "Start")<text>Start &nbsp;&nbsp;&nbsp;</text>
+        @Html.RadioButton("option", "End") <text>End &nbsp;&nbsp;&nbsp;</text>
+        @Html.TextBox("search")
+        <input type="submit" name="submit" value="Search" />
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Start)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.End)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Supervisor)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Start)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.End)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Supervisor)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.StudentId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+

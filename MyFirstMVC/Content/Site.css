@@ -5,6 +5,23 @@
     padding-right: 15px;
 }
 
+a {
+    color: #878580;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.nav-item > a {
+    color: #fff;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.nav-item > a:hover {
+    color: #0f7864;
+    text-decoration: underline;
+}
+
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
